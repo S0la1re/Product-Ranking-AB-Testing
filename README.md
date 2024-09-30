@@ -85,21 +85,22 @@ Our success metric is **Conversion Rate**, which we aim to increase. However, it
 - Null Hypothesis (H0): The ARPU between the old and new ranking algorithms is the same.
 - Alternative Hypothesis (Ha): The ARPU between the old and new ranking algorithms is different.
 
-**Alpha** = 0.05
+- **Alpha** = 0.05
 
-**Statistical Power** = 0.8 
+- **Statistical Power** = 0.8 
 
-**MDE** = 0.3% 
+- **MDE** = 0.3% 
 
 
 
 ## Step 3 - Design the Experiment
 
-**Randomization Unit**: User
+- **Randomization Unit**: User
 
-**Target Population in the Experiment**: Users = Visitors who searches a product
+- **Target Population in the Experiment**: Users = Visitors who searches a product
 
-**Duration of the Experiment**: 1 to 2 weeks
+- **Duration of the Experiment**: 1 to 2 weeks
+
 
 ### Determine the Sample Size
 
@@ -116,20 +117,22 @@ Where:
 
 
 #### Assumptions
-Since we don’t have real data about metrics, we’ll estimate what it could look like based on industry averages.
+Since we don't have any real metrics data, we'll estimate what they might look like based on industry averages.
 
 - **Conversion rate** = 4% (which corresponds to the conversion rate for a typical online grocery store).
 
 - **ARPU** = 50 euros
 
 
+
 ## Step 4 - Data Generation
 
-### Dataset Description
 
+### Dataset Description
 Since we do not have access to real-world data, we have generated a **synthetic dataset** that simulates user behavior based on realistic assumptions and probability distributions. This dataset allows us to mimic an online grocery store scenario for testing purposes.
 
 The script used to generate this dataset can be found in the `data_generation.ipynb file`, available [here](https://github.com/S0la1re/Product-Ranking-AB-Testing/blob/Development/data_generation.ipynb).
+
 
 ### Key Columns
 - **user_id**: A unique identifier for each user.
@@ -145,7 +148,9 @@ The script used to generate this dataset can be found in the `data_generation.ip
 - **visitor_type**: Whether the user is a "new" or "old" visitor (new or returning customer).
 
 
+
 ## Step 5 - Validity Checks
+
 
 ### Summary
 - **Instrumentation Effect**: No issues were detected as the synthetic dataset was thoroughly validated.
@@ -159,7 +164,10 @@ Overall, the experiment data has passed all validity checks, confirming its suit
 
 ## Step 6 - Interpret Results
 
+
+### Results
 ![results](images/summary1.jpg)
+
 
 ### Interpretation
 We observed some improvement in the conversion rate for the experiment group compared to the control group, with an absolute increase of 0.36%, which is greater than the Minimum Detectable Effect (MDE) of 0.3%. However, there is **not enough evidence** at the 5% significance level to conclude that the conversion rate between the old and new ranking algorithms is different (p-value = 0.546). This result is likely due to high variability in our groups.
@@ -167,7 +175,9 @@ We observed some improvement in the conversion rate for the experiment group com
 For ARPU, we observed an absolute increase of €13.32, which is statistically significant (p-value = 0.0348).
 
 
+
 ## Step 7 - Launch Decision
+
 
 ### Decision
 If this were a real case, the best course of action would be to **rerun the experiment with increased statistical power** to ensure that the observed change is practically significant.
