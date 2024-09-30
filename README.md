@@ -123,25 +123,26 @@ Where:
 - $p$ — This is the current base conversion rate (e.g. 4%).
 - $\delta$ —  This is the minimum detectable effect (MDE). It is the difference between the means of the control and experimental groups that you want to detect. The smaller $\delta$, the larger the sample size needed to accurately detect this difference.
 
-#### Exact sample size
-According to calculations, each group should have **2790** participants.
-
-
-### Assumptions
+#### Assumptions
 Since we don't have any real metrics data, we'll estimate what they might look like based on industry averages.
 
-#### Estimating Conversion Rate
+##### Estimating Conversion Rate
 1. Typical industry data:
     - Based on ChatGPT’s response, on average, the conversion rate for online grocery stores can range from 2% to 5%. However, grocery stores have a certain specificity — if a customer visits with the intent to buy groceries, the conversion rate might be higher compared to apparel or electronics stores.
     - For large retailers like Rimi, the conversion rate may be closer to the upper end of this range.
 2. Assumption:
     - **Conversion rate** = 4% (which corresponds to the conversion rate for a typical online grocery store).
 
-#### Estimating ARPU
+##### Estimating ARPU
 1. Typical industry data:
     - ChatGPT suggests that ARPU for online grocery retailers often ranges from 20 to 100 euros, depending on the region and shopping frequency. The standard deviation, on average, can range from 20% to 50% of the average ARPU.
 2. Assumption:
     - **Average ARPU** = 50 euros
+
+
+#### Exact sample size
+According to calculations, each group should have **2790** participants.
+
 
 
 
