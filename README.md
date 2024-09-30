@@ -85,11 +85,11 @@ Our success metric is **Conversion Rate**, which we aim to increase. However, it
 - Null Hypothesis (H0): The ARPU between the old and new ranking algorithms is the same.
 - Alternative Hypothesis (Ha): The ARPU between the old and new ranking algorithms is different.
 
-- **Alpha** = 0.05
+**Alpha** = 0.05
 
-- **Statistical Power** = 0.8 
+**Statistical Power** = 0.8 
 
-- **MDE** = 0.3% 
+**MDE** = 0.3% 
 
 
 
