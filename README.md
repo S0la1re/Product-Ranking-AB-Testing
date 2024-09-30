@@ -243,6 +243,7 @@ Overall, the experiment data has passed all validity checks, confirming its suit
 #### ARPU
 ![ARPU_with_95%_Confidence_Intervals](images/ARPU_with_95%_Confidence_Intervals.png)
 
+
 ### Summary
 ![results](images/summary1.jpg)
 
