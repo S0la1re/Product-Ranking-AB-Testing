@@ -218,25 +218,16 @@ Before conducting any statistical tests, it is essential to perform validity che
 - **External Factors**: Not applicable to our synthetic data, ensuring no impact from outside influences such as economic conditions or holidays.
 - **Selection Bias**: Both control and experiment groups were found to be homogeneous, with no significant differences in key metrics before the experiment began. A/A test results:
     - product_views: p-value = 0.7843
-        - No significant difference in product_views between groups.
     - cart_adds: p-value = 0.8353
-        - No significant difference in cart_adds between groups.
     - purchase_amount: p-value = 0.4702
-        - No significant difference in purchase_amount between groups.
     - session_duration: p-value = 0.9470
-        - No significant difference in session_duration between groups.
 - **Sample Ratio Mismatch**: The Chi-Square test confirmed a perfect 50/50 split between the control and experiment groups, eliminating any concerns about unequal sample sizes. Chi-Square test results:
     - Chi-Square Statistic: 0.0000, p-value: 1.0000
-        - No Sample Ratio Mismatch.
 - **Novelty Effect**: There were no significant differences in behavior between new and returning visitors, indicating that the observed results are not due to temporary engagement spikes. A/A test results:
     - product_views: p-value = 0.0773
-        - No significant difference in product_views between groups.
     - cart_adds: p-value = 0.3787
-        - No significant difference in cart_adds between groups.
     - purchase_amount: p-value = 0.1764
-        - No significant difference in purchase_amount between groups.
     - session_duration: p-value = 0.6082
-        - No significant difference in session_duration between groups.
 
 Overall, the experiment data has passed all validity checks, confirming its suitability for further statistical analysis and interpretation.
 
