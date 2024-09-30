@@ -71,7 +71,13 @@ If we modify this ranking algorithm, the suggested products may become more rele
 ![user_funnel.drawio.png](images/user_funnel.drawio.png)
 
 
-### Syccess metrics
+### Success Metrics
+To define the success metric, we need to consider the folowing guiding princeples, the metric should be:
+- Measurable
+- Attributable
+- Sensitive
+- Timely
+
 Our success metric is **Conversion Rate**, which we aim to increase. However, it's crucial that this improvement does not come at the expense of the **Average Revenue Per User (ARPU)**, which should remain stable or improve.
 
 
@@ -90,21 +96,23 @@ Our success metric is **Conversion Rate**, which we aim to increase. However, it
 **Statistical Power** = 0.8 
 
 **MDE** = 0.3% 
+ - 0,3% MDE: This is a good balance, it’s sensitive enough to detect meaningful changes in revenue, while also being realistic in terms of sample size and experiment duration.
 
 
 
 ## Step 3 - Design the Experiment
 
-- **Randomization Unit**: User
+1. **Randomization Unit**: User
 
-- **Target Population in the Experiment**: Users = Visitors who searches a product
+2. **Target Population in the Experiment**: Users = Visitors who searches a product
 
-- **Duration of the Experiment**: 1 to 2 weeks
+3. **Duration of the Experiment**: 1 to 2 weeks
+    - *"Typical duration of the experiment is 1 to 2 weeks. You don’t want to run the experiment for less than one week, because you want to account for the day of the week effect, meaning there could be some underlying difference in terms of how the user engages with the website during the weekdays versus the weekends" (Daniel Lee, 2022).*
 
 
 ### Determine the Sample Size
 
-We used this formula to estimate the sample size:
+We used Python, specifically the `statsmodels` library, and the `NormalIndPower().solve_power()` method to estimate the sample size. This method is based on the following formula for sample size estimation:
 
 $$n = \left( \frac{Z_{\alpha/2} + Z_\beta}{\frac{\delta}{\sqrt{p(1-p)}}} \right) ^ 2 $$
 
@@ -119,9 +127,18 @@ Where:
 #### Assumptions
 Since we don't have any real metrics data, we'll estimate what they might look like based on industry averages.
 
-- **Conversion rate** = 4% (which corresponds to the conversion rate for a typical online grocery store).
+##### Estimating Conversion Rate
+1. Typical industry data:
+    - Based on ChatGPT’s response, on average, the conversion rate for online grocery stores can range from 2% to 5%. However, grocery stores have a certain specificity — if a customer visits with the intent to buy groceries, the conversion rate might be higher compared to apparel or electronics stores.
+    - For large retailers like Rimi, the conversion rate may be closer to the upper end of this range.
+2. Assumption:
+    - **Conversion rate** = 4% (which corresponds to the conversion rate for a typical online grocery store).
 
-- **ARPU** = 50 euros
+##### Estimating ARPU
+1. Typical industry data:
+    - ChatGPT suggests that ARPU for online grocery retailers often ranges from 20 to 100 euros, depending on the region and shopping frequency. The standard deviation, on average, can range from 20% to 50% of the average ARPU.
+2. Assumption:
+    - **Average ARPU** = 50 euros
 
 
 
