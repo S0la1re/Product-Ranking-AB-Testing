@@ -1,15 +1,15 @@
 # Product Ranking Optimization | A/B Testing Project
 
 
-## Project Overview
 
+## Project Overview
 This project simulates an A/B testing scenario for an online grocery store, “Rimi,” to assess the impact of a new product ranking algorithm on user behavior.
 
 ![screenshot from Rimi website ](images/rimi.png)
 
 
-## Methodology
 
+## Methodology
 1. **Problem statement** - What is the goal of the experiment?
     - Understanding the nature of the product
     - Asking clarifying questions:
@@ -55,18 +55,28 @@ This project simulates an A/B testing scenario for an online grocery store, “R
         - Cost of Launching
 
 
+
 ## Step 1 - Problem statement
+
+
+### Understanding the Nature of the Product
+Rimi is an online grocery store that offers a wide range of products, including fresh produce, meat, dairy, baked goods, and more. The store uses a product ranking system or recommendation algorithm.
+
+When a user enters keywords such as "meat" or "fruits," this algorithm generates a list of products that could be relevant to that customer, based on factors like their profile, purchase history, and other data.
+
+If we modify this ranking algorithm, the suggested products may become more relevant to customers, which in turn should **boost sales** for the online store.
+
 
 ### User Journey
 ![user_funnel.drawio.png](images/user_funnel.drawio.png)
 
+
 ### Syccess metrics
-- Main metric, should improve - **Conversion Rate**
-- Secondary metric, should stay the same or improve - **Average Revenue Per User (ARPU)**
+Our success metric is **Conversion Rate**, which we aim to increase. However, it's crucial that this improvement does not come at the expense of the **Average Revenue Per User (ARPU)**, which should remain stable or improve.
+
 
 
 ## Step 2 - Hypothesis testing
-
 **Conversion Rate Hypotheses**:
 - Null Hypothesis (H0): The сonversion rate between the old and new ranking algorithms is the same.
 - Alternative Hypothesis (Ha): The conversion rate between the old and new ranking algorithms is different.
@@ -74,7 +84,6 @@ This project simulates an A/B testing scenario for an online grocery store, “R
 **ARPU Hypotheses**:
 - Null Hypothesis (H0): The ARPU between the old and new ranking algorithms is the same.
 - Alternative Hypothesis (Ha): The ARPU between the old and new ranking algorithms is different.
-
 
 **Alpha** = 0.05
 
