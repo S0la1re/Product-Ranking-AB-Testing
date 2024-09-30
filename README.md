@@ -3,7 +3,7 @@
 
 ## Project Overview
 
-This project simulates an A/B testing scenario for an online grocery store, “Rimi,” to assess the impact of a new product ranking algorithm on user behavior. The primary focus is to evaluate changes in `conversion rates` and `Average Revenue Per User` (ARPU) between the control group (old ranking algorithm) and the experiment group (new ranking algorithm).
+This project simulates an A/B testing scenario for an online grocery store, “Rimi,” to assess the impact of a new product ranking algorithm on user behavior.
 
 ![screenshot from Rimi website ](images/rimi.png)
 
@@ -55,8 +55,52 @@ This project simulates an A/B testing scenario for an online grocery store, “R
         - Cost of Launching
 
 
+## Step 1 - Problem statement
 
-## Dataset Description
+### User Journey
+![user_funnel.drawio.png](images/user_funnel.drawio.png)
+
+### Syccess metrics
+- Main metric, should improve - **Conversion Rate**
+- Secondary metric, should stay the same or improve - **Average Revenue Per User (ARPU)**
+
+
+## Step 2 - Hypothesis testing
+
+**Conversion Rate Hypotheses**:
+- Null Hypothesis (H0): The сonversion rate between the old and new ranking algorithms is the same.
+- Alternative Hypothesis (Ha): The conversion rate between the old and new ranking algorithms is different.
+
+**ARPU Hypotheses**:
+- Null Hypothesis (H0): The ARPU between the old and new ranking algorithms is the same.
+- Alternative Hypothesis (Ha): The ARPU between the old and new ranking algorithms is different.
+
+
+**Alpha** = 0.05
+
+**Statistical Power** = 0.8 
+
+**MDE** = 0.3% 
+
+
+
+## Step 3 - Design the Experiment
+
+**Randomization Unit** = User
+
+Target Population in the Experiment:
+**Users** = Visitors who searches a product
+
+We used Python and the `statsmodels` library to estimate the sample size. We used this formula :
+$$n = \frac{2(Z_{\alpha/2} + Z_\beta)^2 \cdot p(1-p)}{\delta^2}$$
+
+Duration of the Experiment = 1 to 2 weeks
+
+
+
+## Step 4 - Data Generation
+
+### Dataset Description
 
 Since we do not have access to real-world data, we have generated a **synthetic dataset** that simulates user behavior based on realistic assumptions and probability distributions. This dataset allows us to mimic an online grocery store scenario for testing purposes.
 
@@ -76,7 +120,19 @@ The script used to generate this dataset can be found in the `data_generation.ip
 - **visitor_type**: Whether the user is a "new" or "old" visitor (new or returning customer).
 
 
-## Results
+## Step 5 - Validity Checks
+
+### Summary
+- **Instrumentation Effect**: No issues were detected as the synthetic dataset was thoroughly validated.
+- **External Factors**: Not applicable to our synthetic data, ensuring no impact from outside influences such as economic conditions or holidays.
+- **Selection Bias**: Both control and experiment groups were found to be homogeneous, with no significant differences in key metrics before the experiment began.
+- **Sample Ratio Mismatch**: The Chi-Square test confirmed a perfect 50/50 split between the control and experiment groups, eliminating any concerns about unequal sample sizes.
+- **Novelty Effect**: There were no significant differences in behavior between new and returning visitors, indicating that the observed results are not due to temporary engagement spikes.
+
+Overall, the experiment data has passed all validity checks, confirming its suitability for further statistical analysis and interpretation.
+
+
+## Step 6 - Interpret Results
 
 ![results](images/summary1.jpg)
 
@@ -85,6 +141,8 @@ We observed some improvement in the conversion rate for the experiment group com
 
 For ARPU, we observed an absolute increase of €13.32, which is statistically significant (p-value = 0.0348).
 
+
+## Step 7 - Launch Decision
 
 ### Decision
 If this were a real case, the best course of action would be to **rerun the experiment with increased statistical power** to ensure that the observed change is practically significant.
