@@ -83,13 +83,6 @@ Our success metric is **Conversion Rate**, which we aim to increase. However, it
 
 
 ## Step 2 - Hypothesis testing
-1. **Alpha**: 0.05
-
-2. **Statistical Power**: 0.8 
-
-3. **MDE**: 0.3% 
-    - 0.3% MDE: This is a good balance, it’s sensitive enough to detect meaningful changes in revenue, while also being realistic in terms of sample size and experiment duration.
-
 **Conversion Rate Hypotheses**:
 - Null Hypothesis (H0): The сonversion rate between the old and new ranking algorithms is the same.
 - Alternative Hypothesis (Ha): The conversion rate between the old and new ranking algorithms is different.
@@ -97,6 +90,13 @@ Our success metric is **Conversion Rate**, which we aim to increase. However, it
 **ARPU Hypotheses**:
 - Null Hypothesis (H0): The ARPU between the old and new ranking algorithms is the same.
 - Alternative Hypothesis (Ha): The ARPU between the old and new ranking algorithms is different.
+
+1. **Alpha** = 0.05
+
+2. **Statistical Power** = 0.8 
+
+3. **MDE** = 0.3% 
+    - 0.3% MDE: This is a good balance, it’s sensitive enough to detect meaningful changes in revenue, while also being realistic in terms of sample size and experiment duration.
 
 
 
