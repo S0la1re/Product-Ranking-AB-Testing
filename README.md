@@ -95,16 +95,32 @@ Our success metric is **Conversion Rate**, which we aim to increase. However, it
 
 ## Step 3 - Design the Experiment
 
-**Randomization Unit** = User
+**Randomization Unit**: User
 
-Target Population in the Experiment:
-**Users** = Visitors who searches a product
+**Target Population in the Experiment**: Users = Visitors who searches a product
 
-We used Python and the `statsmodels` library to estimate the sample size. We used this formula :
-$$n = \frac{2(Z_{\alpha/2} + Z_\beta)^2 \cdot p(1-p)}{\delta^2}$$
+**Duration of the Experiment**: 1 to 2 weeks
 
-Duration of the Experiment = 1 to 2 weeks
+### Determine the Sample Size
 
+We used this formula to estimate the sample size:
+
+$$n = \left( \frac{Z_{\alpha/2} + Z_\beta}{\frac{\delta}{\sqrt{p(1-p)}}} \right) ^ 2 $$
+
+Where:
+- $n$ — This is the required sample size for each group (control and experimental).
+- $Z_{\alpha/2}$ — This is the critical value of the normal distribution for the significance level ($\alpha$). It is set as $\alpha/2$ because we often use a two-tailed test. For example, for a significance level of 0.05, the value of $Z_{\alpha/2}$ is approximately 1.96.
+- $Z_\beta$ — This is the critical value for the test power ($\beta$). For example, for a power of 0.8, the value of $Z_\beta$  is approximately 0.84.
+- $p$ — This is the current base conversion rate (e.g. 4%).
+- $\delta$ —  This is the minimum detectable effect (MDE). It is the difference between the means of the control and experimental groups that you want to detect. The smaller $\delta$, the larger the sample size needed to accurately detect this difference.
+
+
+#### Assumptions
+Since we don’t have real data about metrics, we’ll estimate what it could look like based on industry averages.
+
+- **Conversion rate** = 4% (which corresponds to the conversion rate for a typical online grocery store).
+
+- **ARPU** = 50 euros
 
 
 ## Step 4 - Data Generation
