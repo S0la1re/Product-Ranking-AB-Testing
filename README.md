@@ -239,9 +239,9 @@ Overall, the experiment data has passed all validity checks, confirming its suit
 ### Visualizations 
 
 #### Conversion
-![Conversion_Rate_with_95%_Confidence_Intervals](images/Conversion_Rate_with_95%_Confidence_Intervals.png)
+![Conversion_Rate_with_95%_Confidence_Intervals](images/Conversion_Rate_with_95_Confidence_Intervals.png)
 #### ARPU
-![ARPU_with_95%_Confidence_Intervals](images/ARPU_with_95%_Confidence_Intervals.png)
+![ARPU_with_95%_Confidence_Intervals](images/ARPU_with_95_Confidence_Intervals.png)
 
 
 ### Summary
