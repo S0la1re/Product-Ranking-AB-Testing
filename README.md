@@ -91,11 +91,11 @@ Our success metric is **Conversion Rate**, which we aim to increase. However, it
 - Null Hypothesis (H0): The ARPU between the old and new ranking algorithms is the same.
 - Alternative Hypothesis (Ha): The ARPU between the old and new ranking algorithms is different.
 
-**Alpha** = 0.05
+1. **Alpha** = 0.05
 
-**Statistical Power** = 0.8 
+2. **Statistical Power** = 0.8 
 
-**MDE** = 0.3% 
+3. **MDE** = 0.3% 
  - 0,3% MDE: This is a good balance, it’s sensitive enough to detect meaningful changes in revenue, while also being realistic in terms of sample size and experiment duration.
 
 
@@ -163,6 +163,49 @@ The script used to generate this dataset can be found in the `data_generation.ip
 - **traffic_source**: The source of traffic that brought the user to the site (organic, paid ad, or direct).
 - **region**: The region where the user is located (Estonia, Latvia, Lithuania).
 - **visitor_type**: Whether the user is a "new" or "old" visitor (new or returning customer).
+
+
+### Variables and Distributions
+1. **Session Date**:
+    - **Distribution**: Randomly assigned from a uniform distribution over a specific date range with an hourly frequency.
+    - **Assumption**: User sessions are evenly distributed throughout the experiment period without any special temporal effects.
+2. **Product Views & Cart Adds**:
+    - **Distribution**: Both follow **Poisson distributions**.
+        - `product_views`: $\lambda$ = 5.
+        - `cart_adds`: $\lambda$ = 2
+    - **Assumption**: The number of products viewed and items added to the cart by users occurs randomly but follows a discrete count distribution typical for e-commerce behavior.
+3. **Session Duration**:
+    - **Distribution**: **Exponential distribution** with a scale parameter of 10 (minutes).
+    - **Assumption**: Most sessions are short, with a few longer sessions, mimicking user behavior in online shopping where session duration has a long tail.
+4. **Device Type**:
+    - **Distribution**: Categorical with probabilities:
+        - Mobile: 70%
+        - Desktop: 25%
+        - Tablet: 5%
+    - **Assumption**: Most users access the site via mobile, reflecting common device usage patterns in online retail.
+5. **Traffic Source**:
+    - **Distribution**: Categorical with probabilities:
+        - Organic: 50%
+        - Paid Ad: 30%
+        - Direct: 20%
+    - **Assumption**: A majority of users come from organic search, followed by paid ads and direct traffic.
+6. **Region**:
+    - **Distribution**: Categorical with probabilities:
+        - Estonia: 30%
+        - Latvia: 40%
+        - Lithuania: 30%
+    - **Assumption**: User distribution is balanced across three Baltic countries based on approximate population sizes.
+7. **Visitor Type**:
+    - **Distribution**: Categorical with probabilities:
+        - New visitors: 30%
+        - Returning visitors: 70%
+    - **Assumption**: Returning visitors constitute the majority of the traffic, typical for e-commerce platforms.
+8. **Purchase Amount**:
+    - **Distribution**: Mixed distribution combining:
+        - **Exponential distribution** for smaller purchases (scale = ARPU/3).
+        - **Log-normal distribution** for larger purchases (mean = log(ARPU), sigma = 0.5).
+        - Users have a 70% probability of making smaller purchases and a 30% probability of larger ones.
+    - **Assumption**: Most users make small purchases, but a significant minority makes larger purchases. The distribution is driven by ARPU (Average Revenue Per User) and conversion rate, which are specified for both control and experiment groups.
 
 
 
