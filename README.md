@@ -104,7 +104,7 @@ Duration of the Experiment = 1 to 2 weeks
 
 Since we do not have access to real-world data, we have generated a **synthetic dataset** that simulates user behavior based on realistic assumptions and probability distributions. This dataset allows us to mimic an online grocery store scenario for testing purposes.
 
-The script used to generate this dataset can be found in the `data_generation.ipynb` file.
+The script used to generate this dataset can be found in the `data_generation.ipynb file`, available [here](https://github.com/S0la1re/Product-Ranking-AB-Testing/blob/Development/data_generation.ipynb).
 
 ### Key Columns
 - **user_id**: A unique identifier for each user.
