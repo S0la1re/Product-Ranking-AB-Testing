@@ -226,7 +226,7 @@ Before conducting any statistical tests, it is essential to perform validity che
     - purchase_amount: p-value = 0.4702, Mann-Whitney U test
     - session_duration: p-value = 0.9470, Mann-Whitney U test
 - **Sample Ratio Mismatch**: The Chi-Square test confirmed a perfect 50/50 split between the control and experiment groups, eliminating any concerns about unequal sample sizes. Chi-Square test results:
-    - Chi-Square Statistic: 0.0000, p-value: 1.0000
+    - Chi-Square Statistic: 0.0000, p-value: 1.0000, Chi-Square Goodness of Fit Test
 - **Novelty Effect**: There were no significant differences in behavior between new and returning visitors, indicating that the observed results are not due to temporary engagement spikes. A/A test results:
     - product_views: p-value = 0.0773, Mann-Whitney U test
     - cart_adds: p-value = 0.3787, Mann-Whitney U test
