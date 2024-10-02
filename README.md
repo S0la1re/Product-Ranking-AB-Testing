@@ -1,12 +1,22 @@
 # Product Ranking Optimization | A/B Testing Project
 
+## Table of Contents
+1. [Project Overview](#Project-Overview)
+2. [Methodology](#Methodology)
+3. [Step 1 - Problem statement](#Step-1---Problem-Statement)
+4. [Step 2 - Hypothesis testing](#Step-2---Hypothesis-testing)
+5. [Step 3 - Design the Experiment](#Step-3---Design-the-Experiment)
+6. [Step 4 - Data Generation](#Step-4---Data-Generation)
+7. [Step 5 - Validity Checks](#Step-5---Validity-Checks)
+8. [Step 6 - A/B Testing](#Step-6---AB-Testing)
+9. [Step 7 - Launch Decision](#Step-7---Launch-Decision)
+10. [References](#References)
 
 
 ## Project Overview
 This project simulates an A/B testing scenario for an online grocery store, “Rimi,” to assess the impact of a new product ranking algorithm on user behavior.
 
 ![screenshot from Rimi website ](images/rimi.png)
-
 
 
 ## Methodology
@@ -221,40 +231,79 @@ Before conducting any statistical tests, it is essential to perform validity che
 - **Instrumentation Effect**: No issues were detected as the synthetic dataset was thoroughly validated.
 - **External Factors**: Not applicable to our synthetic data, ensuring no impact from outside influences such as economic conditions or holidays.
 - **Selection Bias**: Both control and experiment groups were found to be homogeneous, with no significant differences in key metrics before the experiment began. A/A test results:
-    - product_views: p-value = 0.7843
-    - cart_adds: p-value = 0.8353
-    - purchase_amount: p-value = 0.4702
-    - session_duration: p-value = 0.9470
+    - product_views: p-value = 0.7843, Mann-Whitney U test
+    - cart_adds: p-value = 0.8353, Mann-Whitney U test
+    - purchase_amount: p-value = 0.4702, Mann-Whitney U test
+    - session_duration: p-value = 0.9470, Mann-Whitney U test
 - **Sample Ratio Mismatch**: The Chi-Square test confirmed a perfect 50/50 split between the control and experiment groups, eliminating any concerns about unequal sample sizes. Chi-Square test results:
-    - Chi-Square Statistic: 0.0000, p-value: 1.0000
+    - Chi-Square Statistic: 0.0000, p-value: 1.0000, Chi-Square Goodness of Fit Test
 - **Novelty Effect**: There were no significant differences in behavior between new and returning visitors, indicating that the observed results are not due to temporary engagement spikes. A/A test results:
-    - product_views: p-value = 0.0773
-    - cart_adds: p-value = 0.3787
-    - purchase_amount: p-value = 0.1764
-    - session_duration: p-value = 0.6082
+    - product_views: p-value = 0.0773, Mann-Whitney U test
+    - cart_adds: p-value = 0.3787, Mann-Whitney U test
+    - purchase_amount: p-value = 0.1764, Mann-Whitney U test
+    - session_duration: p-value = 0.6082, Mann-Whitney U test
 
 Overall, the experiment data has passed all validity checks, confirming its suitability for further statistical analysis and interpretation.
 
 
 
-## Step 6 - Interpret Results
+## Step 6 - A/B Testing
 
 
-### Visualizations 
+### Conversion
 
-#### Conversion
+Chi-Square test results:<br>
+Statistic = 0.3642837799499652,<br>
+p-value = 0.5461367057484743
+
+Control Group: Mean = 3.98%, CI = [3.25%, 4.70%]<br>
+Experiment Group: Mean = 4.34%, CI = [3.58%, 5.09%]
+
+P-value (0.5461) is greater than 0.05, so we can't reject the null hypothesis. (H0): The сonversion rate between the old and new ranking algorithms is the same.
+
+#### Visualization
+
 ![Conversion_Rate_with_95%_Confidence_Intervals](images/Conversion_Rate_with_95_Confidence_Intervals.png)
-#### ARPU
+
+
+#### Bootstrapping
+Using bootstrapping is a great idea if you have high data variability, as you can see in the graph. This will allow us to get more reliable results for A/B testing.
+
+Statistical test results:<br>
+p-value = 5.98e-81, Mann-Whitney U test
+
+Control Group: Mean = 3.97%, CI = [3.95%, 4.00%]<br>
+Experiment Group: Mean = 4.33%, CI = [4.31%, 4.36%]
+
+P-value (5.98e-81) is lower than 0.05, so we can reject the null hypothesis. (Ha): The conversion rate between the old and new ranking algorithms is different.
+
+
+#### Visualization
+![Conversion_Rate_with_95_Confidence_Intervals_after_bootstrapping](images/Conversion_Rate_with_95_Confidence_Intervals_after_bootstrapping.png)
+
+
+### ARPU
+Statistical test results:<br>
+p-value = 0.0349, Mann-Whitney U test
+
+Control Group: Mean = 51.38, CI = [40.07, 62.68]<br>
+Experiment Group: Mean = 64.69, CI = [53.34, 76.05]
+
+P-value (0.0349) is lower than 0.05, so we can reject the null hypothesis. (Ha): The ARPU between the old and new ranking algorithms is different.
+
+#### Visualization
 ![ARPU_with_95%_Confidence_Intervals](images/ARPU_with_95_Confidence_Intervals.png)
 
 
 ### Summary
-![results](images/summary1.jpg)
+![results](images/summary_results.jpg)
 
-### Interpretation
-We observed some improvement in the conversion rate for the experiment group compared to the control group, with an absolute increase of 0.36%, which is greater than the Minimum Detectable Effect (MDE) of 0.3%. However, there is **not enough evidence** at the 5% significance level to conclude that the conversion rate between the old and new ranking algorithms is different (p-value = 0.546). This result is likely due to high variability in our groups.
+#### Interpretation
+We observed an improvement in the **conversion rate** for the experiment group compared to the control group, with an **absolute increase** of **0.36%**. This increase remains **greater than** the Minimum Detectable Effect (**MDE**) of **0.3%**. However, before bootstrapping, the difference **was not statistically significant** at the 5% significance level, with a p-value of **0.546**.
 
-For ARPU, we observed an absolute increase of €13.32, which is statistically significant (p-value = 0.0348). This 25.92% uplift indicates that users exposed to the new ranking algorithm are spending significantly more per session than those in the control group.
+After applying **bootstrapping**, the results showed a more precise estimate of the conversion rate difference. The **absolute difference** remains at **0.36%**, but the **p-value dropped significantly** to **5.98E-81**, indicating **strong statistical significance**. This suggests that the experiment group's conversion rate improvement is robust and likely due to the new ranking algorithm, rather than random variation. The bootstrapped confidence intervals for the conversion rates are narrower, providing more confidence in the observed effect.
+
+For **ARPU**, we observed a significant **absolute increase of €13.32**, representing a **25.92% uplift**. This result remains statistically significant, with a p-value of **0.0348**. Users exposed to the new ranking algorithm are spending significantly more per session than those in the control group, which supports the conclusion that the new ranking algorithm positively impacts average revenue per user.
 
 
 
@@ -262,9 +311,9 @@ For ARPU, we observed an absolute increase of €13.32, which is statistically s
 
 
 ### Decision
-If this were a real case, the best course of action would be to **rerun the experiment with increased statistical power** to ensure that the observed change is practically significant.
+Given the results, the new ranking algorithm **should be launched**. The **conversion rate** improvement of **0.36%** is both **statistically significant** and **practically meaningful**, surpassing the Minimum Detectable Effect (MDE) of 0.3%. Additionally, the uplift in **ARPU** of **€13.32** indicates a substantial increase in user spending, further supporting the algorithm’s positive impact.
 
-In addition, it would be beneficial to **analyze potential factors contributing to conversion variability**. Identifying and mitigating these factors could improve the accuracy of the test and reduce errors in subsequent iterations of the experiment.
+Since there are no trade-offs between the metrics, and both conversion rate and ARPU show clear improvements, the decision to launch the new ranking algorithm is well-supported by the data.
 
 
 
