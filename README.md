@@ -270,10 +270,10 @@ Experiment Group: Mean = 4.33%, CI = [4.31%, 4.36%]
 
 
 ### ARPU
-Statistical test results:
+Statistical test results:<br>
 p-value = 0.0349, Mann-Whitney U test
 
-Control Group: Mean = 51.38, CI = [40.07, 62.68]
+Control Group: Mean = 51.38, CI = [40.07, 62.68]<br>
 Experiment Group: Mean = 64.69, CI = [53.34, 76.05]
 
 #### Visualization
