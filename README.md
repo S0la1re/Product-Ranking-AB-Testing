@@ -8,7 +8,7 @@
 5. [Step 3 - Design the Experiment](#Step-3---Design-the-Experiment)
 6. [Step 4 - Data Generation](#Step-4---Data-Generation)
 7. [Step 5 - Validity Checks](#Step-5---Validity-Checks)
-8. [Step 6 - Interpret Results](#Step-6---Interpret-Results)
+8. [Step 6 - A/B Testing](#Step-6---A/B-Testing)
 9. [Step 7 - Launch Decision](#Step-7---Launch-Decision)
 10. [References](#References)
 
@@ -247,7 +247,7 @@ Overall, the experiment data has passed all validity checks, confirming its suit
 
 
 
-## Step 6 - Interpret Results
+## Step 6 - A/B Testing
 
 
 ### Conversion
