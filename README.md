@@ -1,13 +1,5 @@
 # Product Ranking Optimization | A/B Testing Project
 
-
-
-## Project Overview
-This project simulates an A/B testing scenario for an online grocery store, “Rimi,” to assess the impact of a new product ranking algorithm on user behavior.
-
-![screenshot from Rimi website ](images/rimi.png)
-
-
 ## Table of Contents
 1. [Project Overview](#Project-Overview)
 2. [Methodology](#Methodology)
@@ -19,6 +11,12 @@ This project simulates an A/B testing scenario for an online grocery store, “R
 8. [Step 6 - Interpret Results](#Step-6---Interpret-Results)
 9. [Step 7 - Launch Decision](#Step-7---Launch-Decision)
 10. [References](#References)
+
+
+## Project Overview
+This project simulates an A/B testing scenario for an online grocery store, “Rimi,” to assess the impact of a new product ranking algorithm on user behavior.
+
+![screenshot from Rimi website ](images/rimi.png)
 
 
 ## Methodology
