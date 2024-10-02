@@ -242,11 +242,11 @@ Overall, the experiment data has passed all validity checks, confirming its suit
 
 ### Conversion
 
-Chi-Square test results: 
-Statistic = 0.3642837799499652, 
+Chi-Square test results:<br>
+Statistic = 0.3642837799499652,<br>
 p-value = 0.5461367057484743
 
-Control Group: Mean = 3.98%, CI = [3.25%, 4.70%]
+Control Group: Mean = 3.98%, CI = [3.25%, 4.70%]<br>
 Experiment Group: Mean = 4.34%, CI = [3.58%, 5.09%]
 
 
@@ -258,10 +258,10 @@ Experiment Group: Mean = 4.34%, CI = [3.58%, 5.09%]
 #### Bootstrapping
 Using bootstrapping is a great idea if you have high data variability, as you can see in the graph. This will allow us to get more reliable results for A/B testing.
 
-Statistical test results:
+Statistical test results:<br>
 p-value = 5.98e-81, Mann-Whitney U test
 
-Control Group: Mean = 3.97%, CI = [3.95%, 4.00%]
+Control Group: Mean = 3.97%, CI = [3.95%, 4.00%]<br>
 Experiment Group: Mean = 4.33%, CI = [4.31%, 4.36%]
 
 
