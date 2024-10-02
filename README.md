@@ -8,6 +8,18 @@ This project simulates an A/B testing scenario for an online grocery store, “R
 ![screenshot from Rimi website ](images/rimi.png)
 
 
+## Table of Contents
+1. [Project Overview](#Project-Overview)
+2. [Methodology](#Methodology)
+3. [Step 1 - Problem statement](#Step-1---Problem-Statement)
+4. [Step 2 - Hypothesis testing](#Step-2---Hypothesis-testing)
+5. [Step 3 - Design the Experiment](#Step-3---Design-the-Experiment)
+6. [Step 4 - Data Generation](#Step-4---Data-Generation)
+7. [Step 5 - Validity Checks](#Step-5---Validity-Checks)
+8. [Step 6 - Interpret Results](#Step-6---Interpret-Results)
+9. [Step 7 - Launch Decision](#Step-7---Launch-Decision)
+10. [References](#References)
+
 
 ## Methodology
 1. **Problem statement** - What is the goal of the experiment?
