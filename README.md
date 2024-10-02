@@ -289,7 +289,7 @@ P-value (0.0349) is lower than 0.05, so we can reject the null hypothesis. (Ha):
 ![results](images/summary_results.jpg)
 
 #### Interpretation
-We observed an improvement in the **conversion rate** for the experiment group compared to the control group, with an **absolute increase** of **0.36%**. This increase remains **greater than** the Minimum Detectable Effect (**MDE**) of **0.3%**. However, before bootstrapping, the difference was **not statistically significant** at the 5% significance level, with a p-value of **0.546**.
+We observed an improvement in the **conversion rate** for the experiment group compared to the control group, with an **absolute increase** of **0.36%**. This increase remains **greater than** the Minimum Detectable Effect (**MDE**) of **0.3%**. However, before bootstrapping, the difference **was not statistically significant** at the 5% significance level, with a p-value of **0.546**.
 
 After applying **bootstrapping**, the results showed a more precise estimate of the conversion rate difference. The **absolute difference** remains at **0.36%**, but the **p-value dropped significantly** to **5.98E-81**, indicating **strong statistical significance**. This suggests that the experiment group's conversion rate improvement is robust and likely due to the new ranking algorithm, rather than random variation. The bootstrapped confidence intervals for the conversion rates are narrower, providing more confidence in the observed effect.
 
