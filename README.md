@@ -249,6 +249,7 @@ p-value = 0.5461367057484743
 Control Group: Mean = 3.98%, CI = [3.25%, 4.70%]<br>
 Experiment Group: Mean = 4.34%, CI = [3.58%, 5.09%]
 
+P-value (0.5461) is greater than 0.05, so we can't reject the null hypothesis. (H0): The сonversion rate between the old and new ranking algorithms is the same.
 
 #### Visualization
 
@@ -264,6 +265,8 @@ p-value = 5.98e-81, Mann-Whitney U test
 Control Group: Mean = 3.97%, CI = [3.95%, 4.00%]<br>
 Experiment Group: Mean = 4.33%, CI = [4.31%, 4.36%]
 
+P-value (5.98e-81) is lower than 0.05, so we can reject the null hypothesis. (Ha): The conversion rate between the old and new ranking algorithms is different.
+
 
 #### Visualization
 ![Conversion_Rate_with_95_Confidence_Intervals_after_bootstrapping](images/Conversion_Rate_with_95_Confidence_Intervals_after_bootstrapping.png)
@@ -275,6 +278,8 @@ p-value = 0.0349, Mann-Whitney U test
 
 Control Group: Mean = 51.38, CI = [40.07, 62.68]<br>
 Experiment Group: Mean = 64.69, CI = [53.34, 76.05]
+
+P-value (0.0349) is lower than 0.05, so we can reject the null hypothesis. (Ha): The ARPU between the old and new ranking algorithms is different.
 
 #### Visualization
 ![ARPU_with_95%_Confidence_Intervals](images/ARPU_with_95_Confidence_Intervals.png)
