@@ -301,9 +301,9 @@ For **ARPU**, we observed a significant **absolute increase of €13.32**, repre
 
 
 ### Decision
-If this were a real case, the best course of action would be to **rerun the experiment with increased statistical power** to ensure that the observed change is practically significant.
+Given the results, the new ranking algorithm **should be launched**. The **conversion rate** improvement of **0.36%** is both **statistically significant** and **practically meaningful**, surpassing the Minimum Detectable Effect (MDE) of 0.3%. Additionally, the uplift in **ARPU** of **€13.32** indicates a substantial increase in user spending, further supporting the algorithm’s positive impact.
 
-In addition, it would be beneficial to **analyze potential factors contributing to conversion variability**. Identifying and mitigating these factors could improve the accuracy of the test and reduce errors in subsequent iterations of the experiment.
+Since there are no trade-offs between the metrics, and both conversion rate and ARPU show clear improvements, the decision to launch the new ranking algorithm is well-supported by the data.
 
 
 
