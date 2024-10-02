@@ -286,12 +286,14 @@ P-value (0.0349) is lower than 0.05, so we can reject the null hypothesis. (Ha):
 
 
 ### Summary
-![results](images/summary1.jpg)
+![results](images/summary_results.jpg)
 
-### Interpretation
-We observed some improvement in the conversion rate for the experiment group compared to the control group, with an absolute increase of 0.36%, which is greater than the Minimum Detectable Effect (MDE) of 0.3%. However, there is **not enough evidence** at the 5% significance level to conclude that the conversion rate between the old and new ranking algorithms is different (p-value = 0.546). This result is likely due to high variability in our groups.
+#### Interpretation
+We observed an improvement in the conversion rate for the experiment group compared to the control group, with an **absolute increase of 0.36%**. This increase remains **greater than the Minimum Detectable Effect (MDE) of 0.3%**. However, before bootstrapping, the difference was **not statistically significant** at the 5% significance level, with a p-value of **0.546**.
 
-For ARPU, we observed an absolute increase of €13.32, which is statistically significant (p-value = 0.0348). This 25.92% uplift indicates that users exposed to the new ranking algorithm are spending significantly more per session than those in the control group.
+After applying **bootstrapping**, the results showed a more precise estimate of the conversion rate difference. The **absolute difference** remains at **0.36%**, but the **p-value dropped significantly** to **5.98E-81**, indicating **strong statistical significance**. This suggests that the experiment group's conversion rate improvement is robust and likely due to the new ranking algorithm, rather than random variation. The bootstrapped confidence intervals for the conversion rates are narrower, providing more confidence in the observed effect.
+
+For **ARPU**, we observed a significant **absolute increase of €13.32**, representing a **25.92% uplift**. This result remains statistically significant, with a p-value of **0.0348**. Users exposed to the new ranking algorithm are spending significantly more per session than those in the control group, which supports the conclusion that the new ranking algorithm positively impacts average revenue per user.
 
 
 
