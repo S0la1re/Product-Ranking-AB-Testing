@@ -249,71 +249,57 @@ Overall, the experiment data has passed all validity checks, confirming its suit
 
 ## Step 6 - A/B Testing
 
-
 ### Conversion
 
-Chi-Square test results:<br>
-Statistic = 0.3642837799499652,<br>
-p-value = 0.5461367057484743
+**Chi-Square Test Results:**
+* **Statistic:** 0.3643
+* **p-value:** 0.5461
 
-Control Group: Mean = 3.98%, CI = [3.25%, 4.70%]<br>
-Experiment Group: Mean = 4.34%, CI = [3.58%, 5.09%]
+| Group | Mean | 95% Confidence Interval |
+| :--- | :--- | :--- |
+| **Control** | 3.98% | [3.25%, 4.70%] |
+| **Experiment** | 4.34% | [3.58%, 5.09%] |
 
-P-value (0.5461) is greater than 0.05, so we can't reject the null hypothesis. (H0): The сonversion rate between the old and new ranking algorithms is the same.
-
-#### Visualization
-
-![Conversion_Rate_with_95%_Confidence_Intervals](images/Conversion_Rate_with_95_Confidence_Intervals.png)
-
-
-#### Bootstrapping
-Using bootstrapping is a great idea if you have high data variability, as you can see in the graph. This will allow us to get more reliable results for A/B testing.
-
-Statistical test results:<br>
-p-value = 5.98e-81, Mann-Whitney U test
-
-Control Group: Mean = 3.97%, CI = [3.95%, 4.00%]<br>
-Experiment Group: Mean = 4.33%, CI = [4.31%, 4.36%]
-
-P-value (5.98e-81) is lower than 0.05, so we can reject the null hypothesis. (Ha): The conversion rate between the old and new ranking algorithms is different.
-
+The p-value (0.5461) is greater than 0.05. We **cannot reject the null hypothesis ($H_0$)**: there is no statistically significant difference in conversion rates between the old and new ranking algorithms.
 
 #### Visualization
-![Conversion_Rate_with_95_Confidence_Intervals_after_bootstrapping](images/Conversion_Rate_with_95_Confidence_Intervals_after_bootstrapping.png)
+![Conversion Rate with 95% Confidence Intervals](images/Conversion_Rate_with_95_Confidence_Intervals.png)
 
+---
 
 ### ARPU
-Statistical test results:<br>
-p-value = 0.0349, Mann-Whitney U test
 
-Control Group: Mean = 51.38, CI = [40.07, 62.68]<br>
-Experiment Group: Mean = 64.69, CI = [53.34, 76.05]
+**Mann-Whitney U Test Results:**
+* **p-value:** 0.0349
 
-P-value (0.0349) is lower than 0.05, so we can reject the null hypothesis. (Ha): The ARPU between the old and new ranking algorithms is different.
+| Group | Mean | 95% Confidence Interval |
+| :--- | :--- | :--- |
+| **Control** | €51.38 | [€40.07, €62.68] |
+| **Experiment** | €64.69 | [€53.34, €76.05] |
+
+The p-value (0.0349) is lower than 0.05. We **reject the null hypothesis ($H_a$)**: there is a statistically significant difference in ARPU between the two algorithms.
 
 #### Visualization
-![ARPU_with_95%_Confidence_Intervals](images/ARPU_with_95_Confidence_Intervals.png)
+![ARPU with 95% Confidence Intervals](images/ARPU_with_95_Confidence_Intervals.png)
 
+---
 
-### Summary
-![results](images/summary_results.jpg)
+### Interpretation
 
-#### Interpretation
-We observed an improvement in the **conversion rate** for the experiment group compared to the control group, with an **absolute increase** of **0.36%**. This increase remains **greater than** the Minimum Detectable Effect (**MDE**) of **0.3%**. However, before bootstrapping, the difference **was not statistically significant** at the 5% significance level, with a p-value of **0.546**.
+* **Conversion Rate (Underpowered Test):** We observed an absolute increase of **0.36%**, which exceeds our Minimum Detectable Effect (MDE) of **0.3%**. However, the result is **not statistically significant** (p-value = 0.5461). Crucially, the initial sample size was calculated incorrectly, resulting in an **underpowered test**. We simply lacked the statistical power required to reliably detect a difference of this size. 
+* **ARPU:** We observed a statistically significant increase of **€13.32** (+25.92%, p-value = 0.0349). While users exposed to the new algorithm appeared to spend more per session, this result must be treated with caution given the sample size flaws of the overall experiment.
 
-After applying **bootstrapping**, the results showed a more precise estimate of the conversion rate difference. The **absolute difference** remains at **0.36%**, but the **p-value dropped significantly** to **5.98E-81**, indicating **strong statistical significance**. This suggests that the experiment group's conversion rate improvement is robust and likely due to the new ranking algorithm, rather than random variation. The bootstrapped confidence intervals for the conversion rates are narrower, providing more confidence in the observed effect.
-
-For **ARPU**, we observed a significant **absolute increase of €13.32**, representing a **25.92% uplift**. This result remains statistically significant, with a p-value of **0.0348**. Users exposed to the new ranking algorithm are spending significantly more per session than those in the control group, which supports the conclusion that the new ranking algorithm positively impacts average revenue per user.
-
-
+---
 
 ## Step 7 - Launch Decision
 
+### Decision: DO NOT LAUNCH
 
-### Decision
-Given the results, the new ranking algorithm **should be launched**. The **conversion rate** improvement of **0.36%** is both **statistically significant** and **practically meaningful**, surpassing the Minimum Detectable Effect (MDE) of 0.3%. Additionally, the uplift in **ARPU** of **€13.32** indicates a substantial increase in user spending, further supporting the algorithm’s positive impact.
+Despite the positive uplift in ARPU and the slight observed lift in Conversion Rate, **we should not launch the new ranking algorithm at this time.**
 
-Since there are no trade-offs between the metrics, and both conversion rate and ARPU show clear improvements, the decision to launch the new ranking algorithm is well-supported by the data.
+**Reasoning & Next Steps:**
+1. **Flawed Methodology:** Due to the incorrect sample size calculation, the test was severely underpowered. We cannot confidently validate the conversion rate impact without risk of a Type II error (false negative) or misleading variance.
+2. **Action Item:** Recalculate the correct sample size required to detect an MDE of 0.3% with adequate power (typically 80%), and **re-run the A/B test** before making a final launch decision.
 
 
 
