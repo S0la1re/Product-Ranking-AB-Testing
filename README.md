@@ -153,6 +153,8 @@ Since we don't have any real metrics data, we'll estimate what they might look l
 #### Exact sample size
 According to calculations, each group should have **2790** participants.
 
+> **UPDATE (2026 Correction):** The calculation above contains an error; the actual required sample size is **65,000–70,000** participants per group. You can verify this based on your specific parameters using [Evan Miller's A/B Testing Sample Size Calculator](https://www.evanmiller.org/ab-testing/sample-size.html).
+
 
 
 
@@ -298,8 +300,8 @@ The p-value (0.0349) is lower than 0.05. We **reject the null hypothesis ($H_a$)
 Despite the positive uplift in ARPU and the slight observed lift in Conversion Rate, **we should not launch the new ranking algorithm at this time.**
 
 **Reasoning & Next Steps:**
-1. **Flawed Methodology:** Due to the incorrect sample size calculation, the test was severely underpowered. We cannot confidently validate the conversion rate impact without risk of a Type II error (false negative) or misleading variance.
-2. **Action Item:** Recalculate the correct sample size required to detect an MDE of 0.3% with adequate power (typically 80%), and **re-run the A/B test** before making a final launch decision.
+1. **Flawed Methodology:** Due to the incorrect sample size calculation (2790 instead of 65,000–70,000 participants per group), the test was severely underpowered. We cannot confidently validate the conversion rate impact without risk of a Type II error (false negative) or misleading variance.
+2. **Action Item:** Recalculate the correct sample size required to detect an MDE of 0.3% with adequate power (80%), and **re-run the A/B test** before making a final launch decision.
 
 
 
