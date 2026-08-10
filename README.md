@@ -299,8 +299,8 @@ explained in [Step 6](#how-the-statistical-test-was-chosen).
 | Check | What it catches | Method | Result |
 |---|---|---|---|
 | **Sample Ratio Mismatch** | Broken assignment | Chi-Square goodness of fit | statistic 0.0000, p = 1.0000 — an exact 50/50 split |
-| **Selection bias** | Groups that differed before the change | A/A tests on 4 metrics | p = 0.7843, 0.8353, 0.4702, 0.9470 — no differences |
-| **Novelty effect** | Reaction to novelty rather than to the change | A/A tests, new vs returning visitors | p = 0.0773, 0.3787, 0.1764, 0.6082 |
+| **Selection bias** | Groups that differed before the change | A/A test, control vs experiment, on 4 metrics | product views 0.7843, cart adds 0.8353, purchase amount 0.4702, session duration 0.9470 |
+| **Novelty effect** | Reaction to novelty rather than to the change | Same 4 metrics, new vs returning visitors | product views 0.0773, cart adds 0.3787, purchase amount 0.1764, session duration 0.6082 |
 | **Instrumentation effect** | Broken or double-counted tracking | Dataset validation | No issues |
 | **External factors** | Holidays, outages, promotions | N/A for synthetic data | Not applicable |
 
@@ -308,16 +308,49 @@ explained in [Step 6](#how-the-statistical-test-was-chosen).
 something in the assignment system is leaking — and whatever causes users to be dropped is
 probably not random, which contaminates the comparison.
 
-**Selection bias**, checked with an **A/A test**: compare the groups on metrics the change
-cannot possibly affect. If a difference shows up there, it was already present before the
-experiment, and the randomisation failed.
+**Selection bias**, checked with an **A/A test** on four metrics: `product_views`, `cart_adds`,
+`purchase_amount` and `session_duration`.
 
-**Novelty effect.** People sometimes click on a new interface simply because it is new, then
-drift back to old habits. An effect that fades after a week is not a real improvement.
+> **In plain terms — what an A/A test is.** Run the same comparison you plan to run later, but
+> on something the change could not possibly have affected. Both groups are treated as if
+> nothing differed between them — hence A/A rather than A/B.
+>
+> The logic is that of a control experiment. If you compare two supposedly identical groups and
+> find a difference anyway, you have not discovered anything about your product — you have
+> discovered that your groups were never identical to begin with, and every result that follows
+> is suspect. A passing A/A test is evidence the randomisation actually worked.
+>
+> This is also the honest way to catch a broken pipeline. Tracking that silently fails on one
+> browser, or an assignment rule that quietly favours logged-in users, shows up here rather than
+> being mistaken for an effect later on.
 
-> **A weakness worth naming:** the standard way to check for novelty is to measure the effect
-> day by day and see whether it decays. I instead compared new against returning visitors —
-> a reasonable check, but of something slightly different. This would be worth redoing properly.
+All four metrics came back with high p-values, so there is no evidence the groups differed.
+
+> **A weakness worth naming.** Three of these four metrics — views, cart adds and session
+> duration — were generated with identical parameters for both groups, which makes them
+> legitimate A/A metrics here. `purchase_amount` was not: it is the outcome the experiment is
+> testing. Including the outcome variable in a selection-bias check is a category error, because
+> a difference there would mean the treatment worked, not that randomisation failed.
+>
+> In a real experiment the safe choices are attributes fixed *before* exposure — device, region,
+> visitor type — or behaviour from a pre-experiment period. In-session metrics can themselves
+> respond to the change, which is exactly what makes them unsuitable as a baseline check.
+
+**Novelty effect.** People sometimes engage with a new interface simply because it is new, then
+drift back to old habits. An effect that fades after a week is not a real improvement — it is a
+reaction to change itself.
+
+The check compares new against returning visitors on the same four metrics.
+
+> **A second weakness worth naming.** As implemented, this compares new and returning visitors
+> across the whole dataset, pooling both groups. That measures whether those two populations
+> behave differently in general — which they may well do for reasons having nothing to do with
+> the experiment — rather than whether the treatment effect is driven by novelty.
+>
+> Two better approaches: measure the effect day by day within the experiment group and see
+> whether it decays, or compare the effect among new users against the effect among returning
+> users. Only returning users can experience novelty, because only they saw the old version.
+> This would be worth redoing properly.
 
 **All checks passed**, so the experiment itself ran cleanly. That is a separate question from
 whether it was large enough to answer anything — it was not.
