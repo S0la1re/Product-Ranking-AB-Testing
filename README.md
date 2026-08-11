@@ -30,8 +30,6 @@ without statistics vocabulary. Everything else assumes some familiarity.
 7. [Step 4 — Data generation](#step-4--data-generation)
 8. [Step 5 — Validity checks](#step-5--validity-checks)
 9. [Step 6 — A/B testing](#step-6--ab-testing)
-    - [How the statistical test was chosen](#how-the-statistical-test-was-chosen)
-    - [What bootstrapping is for](#what-bootstrapping-is-for)
 10. [Step 7 — Launch decision](#step-7--launch-decision)
 11. [What I got wrong](#what-i-got-wrong)
 12. [What I would do differently](#what-i-would-do-differently)
@@ -51,13 +49,12 @@ Better ranking should mean more relevant suggestions, which should mean more pur
 | **ARPU** (guardrail) | €2.04 | €2.81 | +€0.76 | 0.097 | [-€0.13, +€1.68] |
 
 **Decision: do not launch.** Both metrics moved in the desired direction, and neither movement
-can be distinguished from random noise. More importantly, the experiment was underpowered by
-roughly 24x, so it could not have detected an effect of this size even if one existed.
+can be distinguished from noise.
 
-> **In plain terms:** the numbers look encouraging, but they are not trustworthy — and the
-> reason they are not trustworthy is a mistake I made before the experiment even started. I ran
-> it with 2,790 users per group when it needed around 65,000. Shipping a change on this evidence
-> would mean guessing and calling it data.
+> **In plain terms:** the numbers look encouraging but are not trustworthy, because of a mistake
+> I made before the experiment started. I ran it with 2,790 users per group when it needed around
+> 65,000 — too few to detect an effect this size even if one existed. Shipping on this evidence
+> would be guessing and calling it data.
 
 ---
 
@@ -66,15 +63,13 @@ roughly 24x, so it could not have detected an effect of this size even if one ex
 If you change something on a website and sales go up next week, you have learned almost nothing.
 Sales also move with the weather, payday, holidays, competitors' promotions, and pure chance.
 
-An A/B test solves this by splitting users randomly into two groups at the same time. One group
-sees the old version, the other sees the new one. Because assignment is random, both groups
-experience the same weather and the same payday. Anything that differs between them is
-attributable to the change itself.
+An A/B test splits users randomly into two groups at the same time: one sees the old version,
+one the new. Both groups get the same weather and the same payday, so whatever differs between
+them is attributable to the change.
 
-The catch is that random splitting also produces random *differences*. Flip two fair coins 100
-times each and you will not get 50/50 twice. So the real question is never "did the number go
-up" — it is "did it go up by more than chance would produce anyway". That question is what the
-rest of this document is about.
+The catch is that random splitting also produces random *differences* — flip two fair coins 100
+times each and you will not get 50/50 twice. So the question is never "did the number go up",
+but "did it go up by more than chance would produce anyway".
 
 ---
 
@@ -92,9 +87,8 @@ The project follows a seven-step framework taught by Daniel Lee, a data scientis
 7. **Launch decision** — given the result and its trade-offs, do we ship?
 
 > **In plain terms:** the order matters more than any individual step. Every decision that could
-> bias the outcome — which metric counts, how big an effect matters, how many users are needed —
-> is made *before* seeing the data. Otherwise it is far too easy to look at the results first and
-> then pick the definition of success that makes them look good.
+> bias the outcome — which metric counts, what size of effect matters, how many users are needed
+> — is made *before* seeing the data.
 
 ---
 
@@ -106,8 +100,7 @@ Rimi is an online grocery store. When a customer searches for something like "me
 a ranking algorithm decides which products appear and in what order, based on their profile,
 purchase history and other signals.
 
-If the ranking gets better, the suggested products should be more relevant, and more customers
-should end up buying.
+If the ranking gets better, suggestions should be more relevant, and more customers should buy.
 
 ![Rimi product search results](images/rimi.png)
 *The surface being changed: the ranked list a customer sees after searching.*
@@ -117,13 +110,12 @@ should end up buying.
 ![user funnel](images/user_funnel.drawio.png)
 *The ranking change acts at a single point in the funnel — everything below it is downstream.*
 
-The change affects one specific point in the funnel: what a user sees after searching. Mapping
-this first matters, because it constrains which metrics can possibly respond.
+Mapping the funnel first constrains which metrics can possibly respond.
 
-> **In plain terms:** if the change only affects what happens after someone searches, then a
-> metric like "total site visits" cannot be the success metric — the change has no way to
-> influence it. Picking a metric the change cannot move is a common way to run an experiment
-> that was never going to show anything.
+> **In plain terms:** if the change only affects what happens after someone searches, then
+> "total site visits" cannot be the success metric — the change has no way to reach it. Picking
+> a metric the change cannot move is a common way to run an experiment that was never going to
+> show anything.
 
 ### Success metrics
 
@@ -133,11 +125,10 @@ move within the experiment window, and **timely** rather than arriving months la
 - **Primary metric: conversion rate** — the share of users who make a purchase. We want it up.
 - **Guardrail metric: ARPU** (average revenue per user) — should stay flat or improve.
 
-> **In plain terms:** the guardrail exists because almost any single metric can be improved in a
-> way that hurts the business. Push cheap items to the top of every search and more people will
-> buy something, so conversion rises — while revenue per customer falls. A guardrail is a second
-> metric whose job is to catch that kind of hollow win. You do not need it to improve; you need
-> it to not get worse.
+> **In plain terms:** almost any single metric can be improved in a way that hurts the business.
+> Push cheap items to the top of every search and more people buy something, so conversion rises
+> while revenue per customer falls. The guardrail catches that kind of hollow win. It does not
+> need to improve — it needs to not get worse.
 
 ---
 
@@ -165,10 +156,10 @@ move within the experiment window, and **timely** rather than arriving months la
 > (5% risk here) and missing one that is (20% risk here). You cannot drive both to zero; you
 > choose how to split the risk, and you choose *before* looking.
 >
-> The MDE is the honest question "how small a change would still be worth the trouble of
-> building and maintaining this?" Set it tiny and you need an enormous number of users. Set it
-> large and you will miss modest but real improvements. It is a business decision wearing a
-> statistical costume — and, as it turns out, the place where I made my main mistake.
+> The MDE is the honest question "how small a change would still be worth building and
+> maintaining?" Set it tiny and you need an enormous number of users; set it large and you miss
+> modest but real improvements. It is a business decision wearing a statistical costume — and the
+> place where I made my main mistake.
 
 Both tests are two-tailed: we are checking whether the metric *changed*, not merely whether it
 improved. A new algorithm can make things worse, and the test should be able to say so.
@@ -184,17 +175,17 @@ improved. A new algorithm can make things worse, and the test should be able to 
 | Duration | 1–2 weeks |
 
 **Randomising by user, not by session,** means a person sees the same version every time they
-return. Randomising per session would show the same person different rankings on different
-visits, which is confusing for them and contaminates the comparison.
+return. Per-session assignment would show the same shopper different rankings on different
+visits — confusing for them, and it contaminates the comparison.
 
-**Only users who search** are included, because only they are exposed to the change. Including
-everyone else would dilute the effect with people who could not possibly have been affected.
+**Only users who search** are included, because only they are exposed to the change. Everyone
+else would dilute the effect with people who could not have been affected.
 
-**One to two weeks** covers a full weekly cycle. Shopping behaviour on Tuesday differs from
-Saturday, and an experiment that runs only on weekdays measures weekday shoppers.
+**One to two weeks** covers a full weekly cycle. Shopping on Tuesday differs from Saturday, and
+an experiment running only on weekdays measures weekday shoppers.
 
-> **In plain terms:** these three choices decide who is actually being compared. Get them wrong
-> and no amount of careful statistics afterwards will save the result.
+These three choices decide who is actually being compared. Get them wrong and no amount of
+careful statistics afterwards will save the result.
 
 ### Sample size
 
@@ -206,16 +197,13 @@ Where $n$ is the required size per group, $Z_{\alpha/2}$ and $Z_\beta$ come from
 significance level and power, $p$ is the baseline conversion rate, and $\delta$ is the MDE.
 
 > **In plain terms:** the formula answers "how many people do I need before a difference this
-> small stops being drowned out by chance?" The smaller the effect you want to detect, the more
-> people you need — and the relationship is brutal, because halving the detectable effect
-> roughly quadruples the requirement.
+> small stops being drowned out by chance?" The relationship is brutal — halving the effect you
+> want to detect roughly quadruples the users required.
 
-**Assumptions used** (no real historical data was available): baseline conversion 4%, ARPU €50.
-
-> **A note on these figures.** They are illustrative values chosen to make the simulation
-> plausible — not measurements. In a real experiment they would come from the product's own
-> historical data, which is the only source that makes a power calculation meaningful. Guessing
-> the baseline means guessing the sample size.
+**Assumptions used:** baseline conversion 4%, ARPU €50. These are illustrative values chosen to
+make the simulation plausible, not measurements. In a real experiment they would come from the
+product's own history — the only source that makes a power calculation meaningful. Guessing the
+baseline means guessing the sample size.
 
 **Result: 2,790 participants per group.**
 
@@ -225,14 +213,13 @@ significance level and power, $p$ is the baseline conversion rate, and $\delta$ 
 > the parameters above with
 > [Evan Miller's sample size calculator](https://www.evanmiller.org/ab-testing/sample-size.html).
 >
-> **In plain terms:** an MDE of 0.3 percentage points on a 4% baseline is a very small target —
-> it means separating 4.0% from 4.3%. With only 2,790 users per group you would expect around
-> 111 buyers versus 121, and a gap of ten purchases is exactly the kind of thing that happens
-> by chance. Detecting it reliably takes tens of thousands of people per group.
+> **In plain terms:** separating 4.0% from 4.3% is a very small target. At 2,790 users per group
+> that is roughly 111 buyers against 121, and a gap of ten purchases is exactly what chance
+> produces on its own. Detecting it reliably takes tens of thousands per group.
 >
-> Everything below should be read in that light: the experiment was too small to answer its own
-> question. This is the single most consequential error in the project, and it happened before a
-> single line of analysis was written.
+> Read everything below in that light: the experiment was too small to answer its own question.
+> This is the project's most consequential error, and it happened before a single line of
+> analysis was written.
 
 ---
 
@@ -241,10 +228,10 @@ significance level and power, $p$ is the baseline conversion rate, and $\delta$ 
 No real data was available, so a synthetic dataset was generated to simulate user sessions.
 The generator is a single parameterised function in `data_generation.ipynb`.
 
-> **In plain terms:** in a real project this step is instrumentation — making sure the events
-> you need are actually being logged, correctly, for every user. Here it is replaced by writing
-> code that produces plausible fake behaviour. The important discipline is the same either way:
-> decide what each variable should look like and why, before generating or collecting anything.
+> **In plain terms:** in a real project this step is instrumentation — making sure the events you
+> need are logged, correctly, for every user. Here it is replaced by code that produces plausible
+> fake behaviour. The discipline is the same: decide what each variable should look like, and
+> why, before generating or collecting anything.
 
 ### Columns
 
@@ -272,10 +259,10 @@ why the mean is a fragile summary of it — both facts matter later, in [Step 6]
 **Generation parameters:** control conversion 4.1% versus experiment 4.6%, giving a planted
 effect of **0.5pp**.
 
-> **In plain terms:** because I chose the effect myself, finding it proves nothing about
-> ranking algorithms. What it does allow is a genuine test of the *method* — I know the right
-> answer in advance, so I can check whether the analysis recovers it. It did not, which turned
-> out to be the most useful thing the project produced. See [Step 6](#step-6--ab-testing).
+> **In plain terms:** because I chose the effect myself, finding it would prove nothing about
+> ranking algorithms. What it allows is a real test of the *method* — I know the right answer in
+> advance, so I can check whether the analysis recovers it. It did not, which turned out to be
+> the most useful thing this project produced.
 
 **Known weakness:** no random seed is set in the generator, so re-running it produces a
 different dataset. Only the committed CSV is stable. This should be fixed.
@@ -284,57 +271,64 @@ different dataset. Only the committed CSV is stable. This should be fixed.
 
 ## Step 5 — Validity checks
 
-Run **before** looking at the result, to establish whether the experiment is worth analysing
-at all.
+> **In plain terms:** before asking "did it work", ask "did the experiment run properly at all".
+> If assignment was broken or tracking failed on some devices, the result is noise no matter how
+> good the statistics are. Checking afterwards is too late — by then you already know which
+> answer you would prefer.
 
-> **In plain terms:** this is the step most portfolio projects skip, and it is the one that
-> separates a real analysis from a t-test on a spreadsheet. Before asking "did it work",
-> ask "did the experiment run properly at all". If assignment was broken or tracking failed on
-> some devices, the result is noise no matter how good the statistics are. Checking afterwards
-> is too late — by then you already know which answer you would prefer.
-
-The statistical tests below are selected by a fixed rule rather than chosen by hand; the rule is
-explained in [Step 6](#how-the-statistical-test-was-chosen).
+### The checks
 
 | Check | What it catches | Method | Result |
 |---|---|---|---|
-| **Sample Ratio Mismatch** | Broken assignment | Chi-Square goodness of fit | statistic 0.0000, p = 1.0000 — an exact 50/50 split |
-| **Selection bias** | Groups that differed before the change | A/A test, control vs experiment, on 4 metrics | product views 0.7843, cart adds 0.8353, purchase amount 0.4702, session duration 0.9470 |
-| **Novelty effect** | Reaction to novelty rather than to the change | Same 4 metrics, new vs returning visitors | product views 0.0773, cart adds 0.3787, purchase amount 0.1764, session duration 0.6082 |
+| **Sample Ratio Mismatch** | Broken assignment | Chi-Square goodness of fit¹ | statistic 0.0000, p = 1.0000 — an exact 50/50 split |
+| **Selection bias** | Groups that differed before the change | A/A test¹, control vs experiment, on 4 metrics | product views 0.7843, cart adds 0.8353, purchase amount 0.4702, session duration 0.9470 |
+| **Novelty effect** | Reaction to novelty rather than to the change | Same 4 metrics¹, new vs returning visitors | product views 0.0773, cart adds 0.3787, purchase amount 0.1764, session duration 0.6082 |
 | **Instrumentation effect** | Broken or double-counted tracking | Dataset validation | No issues |
 | **External factors** | Holidays, outages, promotions | N/A for synthetic data | Not applicable |
 
-**Sample Ratio Mismatch.** A 50/50 split should produce close to 50/50. If it produces 48/52,
-something in the assignment system is leaking — and whatever causes users to be dropped is
-probably not random, which contaminates the comparison.
+¹ Which test is used in each case is decided by a fixed rule, described below.
+
+**Sample Ratio Mismatch.** A 50/50 split that arrives as 48/52 means something in the assignment
+system is leaking — and whatever drops those users is probably not random, which contaminates
+the comparison.
 
 **Selection bias**, checked with an **A/A test** on four metrics: `product_views`, `cart_adds`,
 `purchase_amount` and `session_duration`.
 
 > **In plain terms — what an A/A test is.** Run the same comparison you plan to run later, but
-> on something the change could not possibly have affected. Both groups are treated as if
-> nothing differed between them — hence A/A rather than A/B.
+> on something the change could not possibly have affected — hence A/A rather than A/B.
 >
-> The logic is that of a control experiment. If you compare two supposedly identical groups and
-> find a difference anyway, you have not discovered anything about your product — you have
-> discovered that your groups were never identical to begin with, and every result that follows
-> is suspect. A passing A/A test is evidence the randomisation actually worked.
->
-> This is also the honest way to catch a broken pipeline. Tracking that silently fails on one
-> browser, or an assignment rule that quietly favours logged-in users, shows up here rather than
-> being mistaken for an effect later on.
+> If two supposedly identical groups differ anyway, you have not learned something about your
+> product; you have learned that your groups were never identical, and every result that follows
+> is suspect. A passing A/A test is evidence the randomisation worked — and it catches broken
+> pipelines, like tracking that silently fails on one browser, before they get mistaken for an
+> effect.
 
-All four metrics came back with high p-values, so there is no evidence the groups differed.
-
-> **A weakness worth naming.** Three of these four metrics — views, cart adds and session
-> duration — were generated with identical parameters for both groups, which makes them
-> legitimate A/A metrics here. `purchase_amount` was not: it is the outcome the experiment is
-> testing. Including the outcome variable in a selection-bias check is a category error, because
-> a difference there would mean the treatment worked, not that randomisation failed.
+> **A weakness worth naming.** `purchase_amount` does not belong in this check: it is the
+> outcome the experiment is testing. A difference there would mean the treatment worked, not
+> that randomisation failed. The other three are fine here, having been generated with identical
+> parameters for both groups.
 >
 > In a real experiment the safe choices are attributes fixed *before* exposure — device, region,
-> visitor type — or behaviour from a pre-experiment period. In-session metrics can themselves
-> respond to the change, which is exactly what makes them unsuitable as a baseline check.
+> visitor type — or behaviour from a pre-experiment period.
+
+#### How the statistical test is chosen
+
+Every comparison here and in Step 6 — including the one above — uses the same helper, which
+checks the assumptions before selecting a test:
+
+1. **Normality** — Shapiro-Wilk for smaller samples, Anderson-Darling above 5,000
+2. **Equal variance** — Levene's test
+3. **Selection** — Student's t-test if normal with equal variance, Welch's t-test if normal with
+   unequal variance, Mann-Whitney U otherwise
+
+> **In plain terms:** using a test whose assumptions your data violate produces confident
+> nonsense. Revenue is heavily skewed — most people spend nothing, a few spend a lot — so it
+> fails the normality check and falls through to the non-parametric option. That is why
+> Mann-Whitney U appears throughout.
+>
+> What matters most is *when* the rule is fixed: before any result is visible, which removes the
+> temptation to try several tests and keep the nicest p-value.
 
 **Novelty effect.** People sometimes engage with a new interface simply because it is new, then
 drift back to old habits. An effect that fades after a week is not a real improvement — it is a
@@ -342,15 +336,13 @@ reaction to change itself.
 
 The check compares new against returning visitors on the same four metrics.
 
-> **A second weakness worth naming.** As implemented, this compares new and returning visitors
-> across the whole dataset, pooling both groups. That measures whether those two populations
-> behave differently in general — which they may well do for reasons having nothing to do with
-> the experiment — rather than whether the treatment effect is driven by novelty.
+> **A second weakness worth naming.** As implemented this pools both groups and compares new
+> against returning visitors overall, which measures whether those two populations differ in
+> general — not whether the treatment effect is driven by novelty.
 >
-> Two better approaches: measure the effect day by day within the experiment group and see
-> whether it decays, or compare the effect among new users against the effect among returning
-> users. Only returning users can experience novelty, because only they saw the old version.
-> This would be worth redoing properly.
+> Better: measure the effect day by day and see whether it decays, or compare the effect among
+> new users against the effect among returning users. Only returning users can experience
+> novelty, because only they saw the old version. Worth redoing properly.
 
 **All checks passed**, so the experiment itself ran cleanly. That is a separate question from
 whether it was large enough to answer anything — it was not.
@@ -358,46 +350,6 @@ whether it was large enough to answer anything — it was not.
 ---
 
 ## Step 6 — A/B testing
-
-Two methodological choices apply to everything in this step, so they are stated up front rather
-than defended metric by metric.
-
-### How the statistical test was chosen
-
-Tests were not picked by hand. A helper function checks the assumptions first and selects
-accordingly:
-
-1. **Normality** — Shapiro-Wilk for smaller samples, Anderson-Darling above 5,000
-2. **Equal variance** — Levene's test
-3. **Selection** — Student's t-test if normal with equal variance, Welch's t-test if normal with
-   unequal variance, Mann-Whitney U otherwise
-
-> **In plain terms:** different tests make different assumptions, and using one whose
-> assumptions your data violate produces confident nonsense. Revenue data is heavily skewed —
-> most people spend nothing, a few spend a lot — so it fails the normality check and the
-> function falls through to the non-parametric option.
->
-> The point of automating this is *when* the decision gets made. The rule is fixed before any
-> result is visible, which removes the temptation to try several tests and keep the one with the
-> nicest p-value. This is the same reasoning behind fixing α, power and the MDE in
-> [Step 2](#step-2--hypotheses) — a decision made after seeing the data is not really a decision.
-
-This rule governs the A/A tests in [Step 5](#step-5--validity-checks) as well as everything below.
-
-### What bootstrapping is for
-
-You have one sample and want to know how much your estimate would wobble if you could collect
-the data again. You cannot, so you simulate it: repeatedly draw a new sample of the same size
-*from your own data, with replacement*, and recompute the answer each time. The spread of those
-answers estimates how uncertain the original estimate is.
-
-Its advantage is that it assumes nothing about the shape of the data, which makes it well suited
-to revenue. Applied correctly, you bootstrap the **difference** between the groups and read the
-2.5th and 97.5th percentiles of that distribution as the confidence interval — never each group
-separately.
-
-> **In plain terms:** it is a way of asking "how differently could this have turned out?" without
-> running the experiment again. It is also easy to get wrong, as the next section shows.
 
 ### Conversion rate
 
@@ -411,12 +363,17 @@ Chi-Square test: statistic 0.3643, **p = 0.5461**. We cannot reject H₀.
 ![Conversion Rate with 95% Confidence Intervals](images/Conversion_Rate_with_95_Confidence_Intervals.png)
 *The intervals overlap heavily, which is the visual form of "we cannot tell these apart".*
 
-> **In plain terms:** 121 buyers against 111 — a difference of ten purchases out of 5,580
-> people. The p-value of 0.55 says that if the two algorithms were truly identical, you would
-> see a gap this large or larger about 55% of the time from luck alone. That is not evidence of
-> anything.
+> **In plain terms:** ten purchases apart, out of 5,580 people. A p-value of 0.55 means that if
+> the algorithms were identical, you would see a gap this large or larger about 55% of the time
+> from luck alone.
 
 #### Bootstrapped check on conversion
+
+Bootstrapping asks how much an estimate would wobble if you could collect the data again. You
+cannot, so you simulate it: repeatedly draw a new sample of the same size *from your own data,
+with replacement*, and recompute the answer each time. The spread of those answers estimates the
+uncertainty. It assumes nothing about the shape of the data, which makes it well suited to
+revenue.
 
 > **UPDATE (2026 Correction) — the original bootstrap here was wrong.**
 >
@@ -428,33 +385,32 @@ Chi-Square test: statistic 0.3643, **p = 0.5461**. We cannot reject H₀.
 > **In plain terms:** averages vary much less than individual people do. Individual customers
 > spend wildly different amounts; the *average* of 2,790 customers barely moves between
 > resamples. By treating those averages as if they were individual observations, I told the test
-> the data were vastly more consistent than they are. Doing it twice compounded the error. The
-> result was p = 5.98e-81 — a number so small it should have been an immediate red flag — and
-> confidence intervals just 0.05pp wide.
+> the data were vastly more consistent than they are. Doing it twice compounded the error.
 >
 > **The lesson:** bootstrapping cannot create precision that is not in the data. If a result
 > becomes dramatically more certain after resampling, the procedure is broken, not the data.
 >
-> Original figures: p = 5.98e-81, control CI [3.95%, 4.00%], experiment CI [4.31%, 4.36%].
+> Original figures: p = 5.98e-81 — small enough to have been an immediate red flag — with
+> control CI [3.95%, 4.00%] and experiment CI [4.31%, 4.36%], just 0.05pp wide.
 
-Done correctly:
+Done correctly, you bootstrap the **difference** between the groups — never each group
+separately — and read the 2.5th and 97.5th percentiles of that distribution as the interval:
 
 Observed difference: **+0.36pp**<br>
 95% CI: **[-0.68pp, +1.40pp]**<br>
 Bootstrap p-value: **0.53**
 
 ![Bootstrap distribution of the conversion rate difference](images/conversion_bootstrap_difference.png)
-*Ten thousand simulated versions of the experiment. Each bar counts how often a given difference
-came up. The black line is "no effect at all", and it sits comfortably inside the bulk of the
-distribution — meaning a result like ours is entirely ordinary even when the algorithms are
-identical.*
+*Ten thousand simulated versions of the experiment. The black line marks "no effect", and it
+sits well inside the bulk of the distribution — a result like ours is ordinary even when the
+algorithms are identical.*
 
 The interval comfortably contains zero, and the bootstrap p-value of 0.53 agrees with the
 Chi-Square result of 0.55.
 
-> **In plain terms:** two different methods on the same data should land in roughly the same
-> place. They do now. The earlier version disagreed by eighty orders of magnitude, which was the
-> clue that something was wrong with the method rather than something remarkable in the data.
+> **In plain terms:** two methods on the same data should land in roughly the same place. They do
+> now. The earlier version disagreed by eighty orders of magnitude — the clue that the method was
+> broken, not that the data were remarkable.
 
 ### ARPU
 
@@ -469,11 +425,11 @@ Chi-Square result of 0.55.
 > filtering on it means selecting on something the algorithm influences.
 >
 > **In plain terms:** the whole value of random assignment is that the two groups are otherwise
-> identical. Keep only the buyers and that guarantee evaporates — because *who becomes a buyer*
-> is exactly what the new algorithm changes. If better ranking converts hesitant shoppers who
-> previously left empty-handed, then the experiment group's buyers now include people the
-> control group's buyers do not. Their average basket shifts because the crowd changed, not
-> because anyone's behaviour did. No choice of statistical test repairs this.
+> identical. Keep only the buyers and that guarantee evaporates, because *who becomes a buyer*
+> is exactly what the algorithm changes. If better ranking converts hesitant shoppers who
+> previously left empty-handed, the experiment group's buyers now include people the control
+> group's do not. The average basket shifts because the crowd changed, not because anyone's
+> behaviour did — and no choice of statistical test repairs that.
 >
 > **The rule:** you may split by things known *before* the experiment — region, device, new
 > versus returning. You may not split by things that happened *after* and depend on the change.
@@ -502,8 +458,8 @@ of it still sits left of zero — which is what "not significant" looks like whe
 
 Both methods agree: **not statistically significant**, and the interval includes zero.
 
-For reference, revenue among buyers only (ARPPU) was €51.38 against €64.69. Reported as a
-diagnostic worth carrying into a future hypothesis, not as evidence of an effect.
+For reference, revenue among buyers only (ARPPU) was €51.38 against €64.69 — a diagnostic worth
+carrying into a future hypothesis, not evidence of an effect.
 
 ### Summary
 
@@ -513,11 +469,9 @@ diagnostic worth carrying into a future hypothesis, not as evidence of an effect
 | Conversion rate (bootstrap) | 3.98% | 4.34% | +0.36pp | Bootstrap of the difference | 0.53 | [-0.68pp, +1.40pp] |
 | ARPU (guardrail) | €2.04 | €2.81 | +€0.76 | Welch's t-test | 0.097 | [-€0.13, +€1.68] |
 
-The conversion rate moved by +0.36pp, which exceeds the 0.3pp MDE — but the movement is not
-statistically significant, and the Chi-Square test and the corrected bootstrap agree on that.
-ARPU rose by €0.76 and is likewise not significant.
-
-Both metrics point in the desired direction. Neither can be distinguished from noise.
+Conversion moved by +0.36pp, which exceeds the 0.3pp MDE — but not significantly, and the
+Chi-Square test and the corrected bootstrap agree on that. ARPU is likewise not significant.
+Both metrics point the right way; neither can be distinguished from noise.
 
 ---
 
@@ -534,23 +488,20 @@ Both metrics point in the desired direction. Neither can be distinguished from n
    detect an effect here is *not* evidence that no effect exists — the design could not have
    told the difference.
 3. **Shipping on a directionally pleasing but non-significant result** is how organisations
-   accumulate changes that quietly do nothing, while everyone believes the product is improving.
+   accumulate changes that quietly do nothing while everyone believes the product is improving.
 
-> **In plain terms:** this is the uncomfortable part. Both numbers went up. It would be easy to
-> write "promising results, recommend launch" and move on. But "the number went up" and "the
-> change caused the number to go up" are different claims, and only the second one justifies
-> shipping. The honest answer here is not yes or no — it is *we do not know, and the reason we
-> do not know is that I designed the experiment too small.*
+> **In plain terms:** both numbers went up, and it would be easy to write "promising results,
+> recommend launch" and move on. But "the number went up" and "the change caused the number to go
+> up" are different claims, and only the second justifies shipping. The honest answer is not yes
+> or no — it is *we do not know, and the reason is that I designed the experiment too small.*
 
-**A note on what "not significant" does not mean.** It does not mean the algorithm does not
-work. The confidence interval for conversion runs from -0.68pp to +1.40pp, which is compatible
-with a meaningful decline, with no effect, and with a solid improvement. A narrow interval
-around zero would be evidence of no effect. A wide interval like this one is evidence that the
-experiment was too small to say anything at all.
+**"Not significant" does not mean "no effect".** The interval for conversion runs from -0.68pp
+to +1.40pp, compatible with a meaningful decline, with nothing, and with a solid improvement. A
+narrow interval around zero would be evidence of no effect; a wide one like this is evidence the
+experiment was too small to say anything.
 
-Worth noting: a 0.5pp effect **was** planted in the data, and the analysis failed to detect it.
-That is a textbook false negative, demonstrated on live numbers rather than in the abstract —
-and a more instructive outcome than a clean win would have been.
+A 0.5pp effect **was** in fact planted in the data and the analysis failed to detect it — a
+textbook false negative, demonstrated on live numbers rather than in the abstract.
 
 **Next steps**
 
@@ -568,17 +519,15 @@ and a more instructive outcome than a clean win would have been.
 
 Kept visible on purpose. Both errors are documented in place above.
 
-**1. The sample size calculation, wrong by a factor of 24.** Consequential, because it happened
-before any analysis and invalidated everything downstream. I caught it on a later re-read and
-verified the correct figure against an independent calculator.
+**1. The sample size, wrong by a factor of 24.** The most consequential, because it happened
+before any analysis and invalidated everything downstream. ([Step 3](#sample-size))
 
-**2. The bootstrap.** I resampled each group separately, reduced each resample to a mean, and
-then treated those means as raw data — inflating certainty enormously and producing p = 5.98e-81.
-The correct approach bootstraps the difference between groups and reads percentiles directly.
+**2. The bootstrap.** I resampled each group separately, reduced each resample to a mean, then
+treated those means as raw data — inflating certainty to p = 5.98e-81.
+([Step 6](#bootstrapped-check-on-conversion))
 
-**3. ARPU measured among buyers only.** Both a naming error and a design error: it conditioned
-on an outcome the treatment influences, which breaks the randomisation. Correcting it removed
-the only significant result in the experiment and made the launch decision coherent.
+**3. ARPU measured among buyers only.** A naming error and a design error at once: it conditioned
+on an outcome the treatment influences, which breaks the randomisation. ([Step 6](#arpu))
 
 > **In plain terms:** the third one is the most interesting, because the original version had
 > exactly one encouraging result and the conclusion had to work around it. Measured properly,
