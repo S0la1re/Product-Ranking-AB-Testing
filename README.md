@@ -1,4 +1,4 @@
-# Product Ranking Optimization | A/B Testing Project
+# A/B Test Design & Analysis — E-Commerce Search Ranking
 
 Designing, running and interpreting an A/B test end to end — including the parts I got wrong
 the first time.
